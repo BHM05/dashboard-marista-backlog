@@ -18,7 +18,7 @@ body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at
 .updated{font-size:12px;color:#d7e0ea;line-height:1.4}.logo-row{display:flex;align-items:center;justify-content:space-between;padding:18px 28px 8px}.logo-marista{height:72px;object-fit:contain}.logo-senior{height:88px;max-width:285px;object-fit:contain}
 .page{max-width:1700px;margin:0 auto;padding:0 24px 22px}.error{display:none;background:rgba(255,63,85,.12);color:#ffd3d8;border:1px solid rgba(255,63,85,.45);border-radius:10px;padding:12px;margin-bottom:14px;white-space:pre-wrap}
 .filters{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1.25fr;gap:18px;margin-bottom:12px}
-label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:uppercase;margin-bottom:7px}select,input{width:100%;border:1px solid #303b44;border-radius:7px;padding:10px 12px;background:#090d10;color:#fff;outline:none}select[multiple]{height:96px;padding:7px 10px}select[multiple] option{padding:4px 6px;border-radius:4px}.filter-note{display:block;color:#7f8b96;font-size:10px;margin-top:4px;text-transform:none;font-weight:400}input::placeholder{color:#7f8b96}
+label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:uppercase;margin-bottom:7px}select,input{width:100%;border:1px solid #303b44;border-radius:7px;padding:10px 12px;background:#090d10;color:#fff;outline:none}.filter-note{display:block;color:#7f8b96;font-size:10px;margin-top:4px;text-transform:none;font-weight:400}.checkbox-filter{width:100%;height:96px;overflow:auto;border:1px solid #303b44;border-radius:7px;background:#090d10;padding:7px 9px}.checkbox-filter label{display:flex;align-items:center;gap:8px;margin:0 0 5px 0;padding:4px 5px;border-radius:5px;text-transform:none;font-size:12px;font-weight:500;color:#fff;cursor:pointer}.checkbox-filter label:hover{background:rgba(8,208,187,.10)}.checkbox-filter input{width:auto;margin:0;accent-color:var(--teal)}.checkbox-filter .all-option{font-weight:800;color:#fff;background:rgba(255,255,255,.07)}input::placeholder{color:#7f8b96}
 .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:14px}.kpi{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:10px;padding:15px 17px;min-height:106px;position:relative;overflow:hidden;display:flex;align-items:center;gap:14px}.kpi{transition:.18s ease}.kpi.clickable{cursor:pointer}.kpi.clickable:hover{transform:translateY(-2px);border-color:rgba(8,208,187,.75);box-shadow:0 0 20px rgba(8,208,187,.18)}.kpi.active{border-color:var(--teal);box-shadow:0 0 0 1px rgba(8,208,187,.4),0 0 24px rgba(8,208,187,.22)}.kpi:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--teal)}.kpi.green:after{background:var(--green)}.kpi.yellow:after{background:var(--yellow)}.kpi.blue:after{background:var(--blue)}.kpi.purple:after{background:var(--purple)}.kpi.red:after{background:var(--red)}
 .ico{font-size:31px;width:40px;text-align:center}.kpi-title{font-size:12px;text-transform:uppercase;font-weight:800;margin-bottom:6px}.kpi-value{font-size:32px;font-weight:900;line-height:1}.kpi-sub{font-size:12px;color:#cbd6e2;margin-top:6px}
 .teal{color:var(--teal)}.green{color:var(--green)}.yellow{color:var(--yellow)}.blue{color:var(--blue)}.purple{color:var(--purple)}.red{color:var(--red)}
@@ -46,15 +46,15 @@ label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:
 <div class="kpi red clickable" onclick="filterCriticos()" title="Clique para ver os itens críticos abertos"><div class="ico red">⚠</div><div><div class="kpi-title red">Críticos abertos</div><div id="kCriticos" class="kpi-value">0</div><div class="kpi-sub">prioridade crítica não concluída</div></div></div>
 </section>
 <section class="filters">
-<div><label>Status <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fStatus" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
-<div><label>Prioridade <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fPrioridade" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
-<div><label>Módulo <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fModulo" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
-<div><label>Sprint <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fSprint" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
-<div><label>Tipo de Atuação <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fTipoAtuacao" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
+<div><label>Status <span class="filter-note">marque uma ou mais opções</span></label><div id="fStatus" class="checkbox-filter"></div></div>
+<div><label>Prioridade <span class="filter-note">marque uma ou mais opções</span></label><div id="fPrioridade" class="checkbox-filter"></div></div>
+<div><label>Módulo <span class="filter-note">marque uma ou mais opções</span></label><div id="fModulo" class="checkbox-filter"></div></div>
+<div><label>Sprint <span class="filter-note">marque uma ou mais opções</span></label><div id="fSprint" class="checkbox-filter"></div></div>
+<div><label>Tipo de Atuação <span class="filter-note">marque uma ou mais opções</span></label><div id="fTipoAtuacao" class="checkbox-filter"></div></div>
 <div><label>Pesquisar</label><input id="fSearch" oninput="applyFilters()" placeholder="ID, descrição, responsável..."></div>
-<div style="display:none"><select id="fResponsavel" multiple><option value="" selected>Todos</option></select></div>
+<div style="display:none"><div id="fResponsavel" class="checkbox-filter"></div></div>
 </section>
-<div id="activeFilterBar" class="active-filter" style="display:none"></div><div class="active-hint">Dica: os cliques agora são acumulativos. Ex.: Pendentes + Críticos + Módulo mostra somente o recorte combinado.</div>
+<div id="activeFilterBar" class="active-filter" style="display:none"></div><div class="active-hint">Dica: marque uma ou mais opções nos filtros. Os cliques nos cards e gráficos também acumulam filtros.</div>
 <section class="grid-4">
 <div class="card"><h2>Status do Backlog</h2><div class="chart-wrap"><canvas id="chartStatus"></canvas></div></div>
 <div class="card"><h2>Prioridade</h2><div class="chart-wrap"><canvas id="chartPrioridade"></canvas></div></div>
@@ -93,18 +93,35 @@ const isCritico=x=>!isConcluido(x)&&(low(x.PRIORIDADE).includes('crítica')||low
 async function loadData(){showLoading(true);showError('');try{const resp=await fetch(DATA_URL+'?v='+Date.now(),{cache:'no-store'});if(!resp.ok)throw new Error('Não consegui ler backlog_marista.json. HTTP '+resp.status);const data=await resp.json();rawData=Array.isArray(data)?data:(Array.isArray(data.body)?data.body:[]);if(!rawData.length)throw new Error('O JSON foi lido, mas não encontrei itens em data.body.');filteredData=rawData.slice();document.getElementById('lastUpdate').textContent=new Date().toLocaleString('pt-BR');populateFilters(rawData);applyFilters();}catch(e){showError(e.message||e)}finally{showLoading(false)}}
 function showLoading(v){document.getElementById('loading').style.display=v?'flex':'none'}function showError(msg){const b=document.getElementById('errorBox');b.style.display=msg?'block':'none';b.textContent=msg||''}
 function unique(arr){return[...new Set(arr.map(norm).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}))}
-function selectedValues(id){return Array.from(document.getElementById(id).selectedOptions).map(o=>o.value).filter(Boolean)}
-function setSelectedValues(id,vals){const el=document.getElementById(id),set=new Set(vals.filter(Boolean));Array.from(el.options).forEach(o=>{o.selected=set.size?set.has(o.value):o.value===''});}
+function selectedValues(id){return Array.from(document.querySelectorAll(`#${id} input[type="checkbox"]:checked`)).map(o=>o.value).filter(Boolean)}
+function setSelectedValues(id,vals){const el=document.getElementById(id),set=new Set((vals||[]).filter(Boolean));const all=el.querySelector('input[value=""]');el.querySelectorAll('input[type="checkbox"]').forEach(o=>{o.checked=set.size?set.has(o.value):o.value===''});if(all)all.checked=!set.size;}
 function toggleMultiValue(id,val){const vals=selectedValues(id);const i=vals.indexOf(val);if(i>=0)vals.splice(i,1);else vals.push(val);setSelectedValues(id,vals);}
 function matchMulti(value,vals){if(!vals.length)return true;const isEmpty=!norm(value);return vals.some(v=>isEmptyFilter(v)?isEmpty:norm(value)===v)}
-function handleMulti(el){const vals=Array.from(el.selectedOptions).map(o=>o.value);if(vals.includes('')&&vals.length>1){Array.from(el.options).forEach(o=>{if(o.value==='')o.selected=false})}if(!Array.from(el.selectedOptions).length){Array.from(el.options).forEach(o=>{if(o.value==='')o.selected=true})}}
+function handleCheck(id,clickedValue){
+ const el=document.getElementById(id);
+ const all=el.querySelector('input[value=""]');
+ if(clickedValue===''){
+  if(all&&all.checked){el.querySelectorAll('input[type="checkbox"]').forEach(o=>{if(o.value!=='')o.checked=false})}
+ }else{
+  if(all)all.checked=false;
+ }
+ if(!el.querySelectorAll('input[type="checkbox"]:checked').length&&all)all.checked=true;
+ setActiveKpis();applyFilters();
+}
 function setOptions(id,values){
  const el=document.getElementById(id),cur=selectedValues(id);
- el.innerHTML='<option value="" selected>Todos</option>';
+ el.innerHTML='';
+ const makeOpt=(value,label,cls='')=>{
+  const wrap=document.createElement('label');if(cls)wrap.className=cls;
+  const cb=document.createElement('input');cb.type='checkbox';cb.value=value;cb.checked=value==='';cb.addEventListener('change',()=>handleCheck(id,value));
+  const span=document.createElement('span');span.textContent=label;
+  wrap.appendChild(cb);wrap.appendChild(span);el.appendChild(wrap);
+ };
+ makeOpt('','Todos','all-option');
  const hasEmpty=values.some(v=>!norm(v));
- if(hasEmpty){const o=document.createElement('option');o.value=EMPTY_VALUE;o.textContent=EMPTY_LABEL;el.appendChild(o)}
- unique(values).forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o)});
- const valid=cur.filter(v=>[...el.options].some(o=>o.value===v));setSelectedValues(id,valid);
+ if(hasEmpty)makeOpt(EMPTY_VALUE,EMPTY_LABEL);
+ unique(values).forEach(v=>makeOpt(v,v));
+ const valid=cur.filter(v=>Array.from(el.querySelectorAll('input[type="checkbox"]')).some(o=>o.value===v));setSelectedValues(id,valid);
 }
 function populateFilters(data){setOptions('fStatus',data.map(x=>x.STATUS));setOptions('fPrioridade',data.map(x=>x.PRIORIDADE));setOptions('fModulo',data.map(x=>x.MODULO));setOptions('fSprint',data.map(x=>x.SPRINT));setOptions('fTipoAtuacao',data.map(x=>x.TIPO_ATUACAO));setOptions('fResponsavel',data.map(x=>x.RESPONSAVEL))}
 function applyFilters(){
