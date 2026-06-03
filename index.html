@@ -18,7 +18,7 @@ body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at
 .updated{font-size:12px;color:#d7e0ea;line-height:1.4}.logo-row{display:flex;align-items:center;justify-content:space-between;padding:18px 28px 8px}.logo-marista{height:72px;object-fit:contain}.logo-senior{height:88px;max-width:285px;object-fit:contain}
 .page{max-width:1700px;margin:0 auto;padding:0 24px 22px}.error{display:none;background:rgba(255,63,85,.12);color:#ffd3d8;border:1px solid rgba(255,63,85,.45);border-radius:10px;padding:12px;margin-bottom:14px;white-space:pre-wrap}
 .filters{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1.25fr;gap:18px;margin-bottom:12px}
-label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:uppercase;margin-bottom:7px}select,input{width:100%;border:1px solid #303b44;border-radius:7px;padding:10px 12px;background:#090d10;color:#fff;outline:none}input::placeholder{color:#7f8b96}
+label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:uppercase;margin-bottom:7px}select,input{width:100%;border:1px solid #303b44;border-radius:7px;padding:10px 12px;background:#090d10;color:#fff;outline:none}select[multiple]{height:96px;padding:7px 10px}select[multiple] option{padding:4px 6px;border-radius:4px}.filter-note{display:block;color:#7f8b96;font-size:10px;margin-top:4px;text-transform:none;font-weight:400}input::placeholder{color:#7f8b96}
 .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:14px}.kpi{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:10px;padding:15px 17px;min-height:106px;position:relative;overflow:hidden;display:flex;align-items:center;gap:14px}.kpi{transition:.18s ease}.kpi.clickable{cursor:pointer}.kpi.clickable:hover{transform:translateY(-2px);border-color:rgba(8,208,187,.75);box-shadow:0 0 20px rgba(8,208,187,.18)}.kpi.active{border-color:var(--teal);box-shadow:0 0 0 1px rgba(8,208,187,.4),0 0 24px rgba(8,208,187,.22)}.kpi:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--teal)}.kpi.green:after{background:var(--green)}.kpi.yellow:after{background:var(--yellow)}.kpi.blue:after{background:var(--blue)}.kpi.purple:after{background:var(--purple)}.kpi.red:after{background:var(--red)}
 .ico{font-size:31px;width:40px;text-align:center}.kpi-title{font-size:12px;text-transform:uppercase;font-weight:800;margin-bottom:6px}.kpi-value{font-size:32px;font-weight:900;line-height:1}.kpi-sub{font-size:12px;color:#cbd6e2;margin-top:6px}
 .teal{color:var(--teal)}.green{color:var(--green)}.yellow{color:var(--yellow)}.blue{color:var(--blue)}.purple{color:var(--purple)}.red{color:var(--red)}
@@ -46,12 +46,13 @@ label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:
 <div class="kpi red clickable" onclick="filterCriticos()" title="Clique para ver os itens críticos abertos"><div class="ico red">⚠</div><div><div class="kpi-title red">Críticos abertos</div><div id="kCriticos" class="kpi-value">0</div><div class="kpi-sub">prioridade crítica não concluída</div></div></div>
 </section>
 <section class="filters">
-<div><label>Status</label><select id="fStatus" onchange="setActiveKpis();applyFilters()"><option value="">Todos</option></select></div>
-<div><label>Prioridade</label><select id="fPrioridade" onchange="setActiveKpis();applyFilters()"><option value="">Todos</option></select></div>
-<div><label>Módulo</label><select id="fModulo" onchange="setActiveKpis();applyFilters()"><option value="">Todos</option></select></div>
-<div><label>Sprint</label><select id="fSprint" onchange="setActiveKpis();applyFilters()"><option value="">Todos</option></select></div>
-<div><label>Tipo de Atuação</label><select id="fTipoAtuacao" onchange="setActiveKpis();applyFilters()"><option value="">Todos</option></select></div>
+<div><label>Status <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fStatus" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
+<div><label>Prioridade <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fPrioridade" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
+<div><label>Módulo <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fModulo" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
+<div><label>Sprint <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fSprint" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
+<div><label>Tipo de Atuação <span class="filter-note">Ctrl/Cmd + clique para múltipla seleção</span></label><select id="fTipoAtuacao" multiple onchange="handleMulti(this);setActiveKpis();applyFilters()"><option value="" selected>Todos</option></select></div>
 <div><label>Pesquisar</label><input id="fSearch" oninput="applyFilters()" placeholder="ID, descrição, responsável..."></div>
+<div style="display:none"><select id="fResponsavel" multiple><option value="" selected>Todos</option></select></div>
 </section>
 <div id="activeFilterBar" class="active-filter" style="display:none"></div><div class="active-hint">Dica: os cliques agora são acumulativos. Ex.: Pendentes + Críticos + Módulo mostra somente o recorte combinado.</div>
 <section class="grid-4">
@@ -61,9 +62,13 @@ label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:
 <div class="card"><h2>Módulos / Rotinas (Top 10)</h2><div class="chart-wrap"><canvas id="chartModulo"></canvas></div></div>
 </section>
 <section class="grid-3">
-<div class="card"><h2>Top Módulos / Rotinas</h2><div class="table-wrap"><table id="tblModulos" class="module-table"></table></div></div>
+<div class="card"><h2>Atividades por Responsável (Top 10)</h2><div class="chart-wrap chart-sm"><canvas id="chartResponsavel"></canvas></div></div>
 <div class="card"><h2>Evolução por Sprint</h2><div class="chart-wrap chart-sm"><canvas id="chartSprint"></canvas></div></div>
 <div class="card"><h2>Críticos por Status</h2><div class="chart-wrap chart-sm"><canvas id="chartCriticos"></canvas></div></div>
+</section>
+<section class="grid-2">
+<div class="card"><h2>Top Módulos / Rotinas</h2><div class="table-wrap"><table id="tblModulos" class="module-table"></table></div></div>
+<div class="card"><h2>Resumo por Responsável</h2><div class="table-wrap"><table id="tblResponsaveis" class="module-table"></table></div></div>
 </section>
 <section class="bottom-kpis">
 <div class="mini"><div class="ico teal">👥</div><div><div class="mini-title">Responsáveis</div><div id="mResp" class="mini-value">0</div><div class="mini-sub">pessoas envolvidas</div></div></div>
@@ -88,23 +93,29 @@ const isCritico=x=>!isConcluido(x)&&(low(x.PRIORIDADE).includes('crítica')||low
 async function loadData(){showLoading(true);showError('');try{const resp=await fetch(DATA_URL+'?v='+Date.now(),{cache:'no-store'});if(!resp.ok)throw new Error('Não consegui ler backlog_marista.json. HTTP '+resp.status);const data=await resp.json();rawData=Array.isArray(data)?data:(Array.isArray(data.body)?data.body:[]);if(!rawData.length)throw new Error('O JSON foi lido, mas não encontrei itens em data.body.');filteredData=rawData.slice();document.getElementById('lastUpdate').textContent=new Date().toLocaleString('pt-BR');populateFilters(rawData);applyFilters();}catch(e){showError(e.message||e)}finally{showLoading(false)}}
 function showLoading(v){document.getElementById('loading').style.display=v?'flex':'none'}function showError(msg){const b=document.getElementById('errorBox');b.style.display=msg?'block':'none';b.textContent=msg||''}
 function unique(arr){return[...new Set(arr.map(norm).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}))}
+function selectedValues(id){return Array.from(document.getElementById(id).selectedOptions).map(o=>o.value).filter(Boolean)}
+function setSelectedValues(id,vals){const el=document.getElementById(id),set=new Set(vals.filter(Boolean));Array.from(el.options).forEach(o=>{o.selected=set.size?set.has(o.value):o.value===''});}
+function toggleMultiValue(id,val){const vals=selectedValues(id);const i=vals.indexOf(val);if(i>=0)vals.splice(i,1);else vals.push(val);setSelectedValues(id,vals);}
+function matchMulti(value,vals){if(!vals.length)return true;const isEmpty=!norm(value);return vals.some(v=>isEmptyFilter(v)?isEmpty:norm(value)===v)}
+function handleMulti(el){const vals=Array.from(el.selectedOptions).map(o=>o.value);if(vals.includes('')&&vals.length>1){Array.from(el.options).forEach(o=>{if(o.value==='')o.selected=false})}if(!Array.from(el.selectedOptions).length){Array.from(el.options).forEach(o=>{if(o.value==='')o.selected=true})}}
 function setOptions(id,values){
- const el=document.getElementById(id),cur=el.value;
- el.innerHTML='<option value="">Todos</option>';
+ const el=document.getElementById(id),cur=selectedValues(id);
+ el.innerHTML='<option value="" selected>Todos</option>';
  const hasEmpty=values.some(v=>!norm(v));
  if(hasEmpty){const o=document.createElement('option');o.value=EMPTY_VALUE;o.textContent=EMPTY_LABEL;el.appendChild(o)}
  unique(values).forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o)});
- el.value=[...el.options].some(o=>o.value===cur)?cur:'';
+ const valid=cur.filter(v=>[...el.options].some(o=>o.value===v));setSelectedValues(id,valid);
 }
-function populateFilters(data){setOptions('fStatus',data.map(x=>x.STATUS));setOptions('fPrioridade',data.map(x=>x.PRIORIDADE));setOptions('fModulo',data.map(x=>x.MODULO));setOptions('fSprint',data.map(x=>x.SPRINT));setOptions('fTipoAtuacao',data.map(x=>x.TIPO_ATUACAO))}
+function populateFilters(data){setOptions('fStatus',data.map(x=>x.STATUS));setOptions('fPrioridade',data.map(x=>x.PRIORIDADE));setOptions('fModulo',data.map(x=>x.MODULO));setOptions('fSprint',data.map(x=>x.SPRINT));setOptions('fTipoAtuacao',data.map(x=>x.TIPO_ATUACAO));setOptions('fResponsavel',data.map(x=>x.RESPONSAVEL))}
 function applyFilters(){
- const st=fStatus.value,pr=fPrioridade.value,mo=fModulo.value,sp=fSprint.value,tp=fTipoAtuacao.value,q=fSearch.value.toLowerCase().trim();
+ const st=selectedValues('fStatus'),pr=selectedValues('fPrioridade'),mo=selectedValues('fModulo'),sp=selectedValues('fSprint'),tp=selectedValues('fTipoAtuacao'),rp=selectedValues('fResponsavel'),q=fSearch.value.toLowerCase().trim();
  filteredData=rawData.filter(x=>{
-  if(st){if(isEmptyFilter(st)?norm(x.STATUS):norm(x.STATUS)!==st)return false;}
-  if(pr){if(isEmptyFilter(pr)?norm(x.PRIORIDADE):norm(x.PRIORIDADE)!==pr)return false;}
-  if(mo){if(isEmptyFilter(mo)?norm(x.MODULO):norm(x.MODULO)!==mo)return false;}
-  if(sp){if(isEmptyFilter(sp)?norm(x.SPRINT):norm(x.SPRINT)!==sp)return false;}
-  if(tp){if(isEmptyFilter(tp)?norm(x.TIPO_ATUACAO):norm(x.TIPO_ATUACAO)!==tp)return false;}
+  if(!matchMulti(x.STATUS,st))return false;
+  if(!matchMulti(x.PRIORIDADE,pr))return false;
+  if(!matchMulti(x.MODULO,mo))return false;
+  if(!matchMulti(x.SPRINT,sp))return false;
+  if(!matchMulti(x.TIPO_ATUACAO,tp))return false;
+  if(!matchMulti(x.RESPONSAVEL,rp))return false;
   if(q&&!Object.values(x).join(' ').toLowerCase().includes(q))return false;
   if(kpiFilters.pendentes&&isConcluido(x))return false;
   if(kpiFilters.criticos&&!isCritico(x))return false;
@@ -115,13 +126,13 @@ function applyFilters(){
 }
 function clearDashboardFilters(){
  kpiFilters={pendentes:false,criticos:false};
- fStatus.value='';fPrioridade.value='';fModulo.value='';fSprint.value='';fTipoAtuacao.value='';fSearch.value='';
+ setSelectedValues('fStatus',[]);setSelectedValues('fPrioridade',[]);setSelectedValues('fModulo',[]);setSelectedValues('fSprint',[]);setSelectedValues('fTipoAtuacao',[]);setSelectedValues('fResponsavel',[]);fSearch.value='';
  setActiveKpis();applyFilters();
  setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120);
 }
 function filterByStatusText(statusText){
  kpiFilters.pendentes=false;
- if(fStatus.value===statusText){fStatus.value=''}else{fStatus.value=statusText}
+ toggleMultiValue('fStatus',statusText)
  setActiveKpis();applyFilters();
  setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120);
 }
@@ -139,20 +150,16 @@ function setActiveKpis(){
  document.querySelectorAll('.kpi').forEach(k=>k.classList.remove('active'));
  if(kpiFilters.pendentes)document.querySelector('.kpi.yellow')?.classList.add('active');
  if(kpiFilters.criticos)document.querySelector('.kpi.red')?.classList.add('active');
- if(fStatus.value){
-  document.querySelectorAll('.kpi').forEach(k=>{if(k.innerText.toLowerCase().includes(fStatus.value.toLowerCase()))k.classList.add('active')});
- }
+ const sts=selectedValues('fStatus').map(v=>displayFilterLabel(v).toLowerCase());
+ if(sts.length){document.querySelectorAll('.kpi').forEach(k=>{if(sts.some(s=>k.innerText.toLowerCase().includes(s)))k.classList.add('active')});}
 }
+function labelMulti(id,name){const vals=selectedValues(id);return vals.length?name+': '+vals.map(displayFilterLabel).join(', '):''}
 function updateActiveFilterBar(){
  const b=document.getElementById('activeFilterBar');
  const labels=[];
  if(kpiFilters.pendentes)labels.push('Pendentes');
  if(kpiFilters.criticos)labels.push('Críticos abertos');
- if(fStatus.value)labels.push('Status: '+displayFilterLabel(fStatus.value));
- if(fPrioridade.value)labels.push('Prioridade: '+displayFilterLabel(fPrioridade.value));
- if(fModulo.value)labels.push('Módulo: '+displayFilterLabel(fModulo.value));
- if(fSprint.value)labels.push('Sprint: '+displayFilterLabel(fSprint.value));
- if(fTipoAtuacao.value)labels.push('Tipo de Atuação: '+displayFilterLabel(fTipoAtuacao.value));
+ ['fStatus:Status','fPrioridade:Prioridade','fModulo:Módulo','fSprint:Sprint','fTipoAtuacao:Tipo de Atuação','fResponsavel:Responsável'].forEach(x=>{const [id,name]=x.split(':');const t=labelMulti(id,name);if(t)labels.push(t)});
  if(fSearch.value.trim())labels.push('Pesquisa: '+fSearch.value.trim());
  if(labels.length){b.style.display='block';b.innerHTML='Filtros ativos: <b>'+labels.join(' + ')+'</b> <button onclick="clearDashboardFilters()">Limpar tudo</button>'}
  else{b.style.display='none';b.innerHTML=''}
@@ -160,12 +167,14 @@ function updateActiveFilterBar(){
 function renderAll(){renderKPIs();renderCharts();renderTables()}function setText(id,v){document.getElementById(id).textContent=v}
 function renderKPIs(){const total=filteredData.length,concl=filteredData.filter(isConcluido).length,pend=total-concl;setText('kTotal',total);setText('kConcluidos',concl);setText('kPendentes',pend);setText('kAndamento',filteredData.filter(x=>!isConcluido(x)&&isAndamento(x)).length);setText('kNaoIniciado',filteredData.filter(x=>!isConcluido(x)&&isNaoIniciado(x)).length);setText('kCriticos',filteredData.filter(isCritico).length);setText('kConcluidosSub',total?Math.round(concl/total*100)+'% do backlog filtrado':'--');setText('mResp',unique(filteredData.map(x=>x.RESPONSAVEL)).length);setText('mSprint',unique(filteredData.map(x=>x.SPRINT)).length);setText('mDepend',filteredData.filter(hasDepend).length);setText('mPct',total?(concl/total*100).toFixed(1)+'%':'0%');setText('mSemSprint',filteredData.filter(x=>!norm(x.SPRINT)).length);setText('mCliente',filteredData.filter(x=>hasDepend(x)&&low(x.DEPENDENCIA).includes('cliente')).length)}
 function countBy(data,field){const m={};data.forEach(x=>{const k=norm(x[field])||'Não informado';m[k]=(m[k]||0)+1});return m}function destroy(id){if(charts[id]){charts[id].destroy();delete charts[id]}}
-function donut(id,obj){destroy(id);charts[id]=new Chart(document.getElementById(id),{type:'doughnut',data:{labels:Object.keys(obj),datasets:[{data:Object.values(obj),backgroundColor:palette,borderWidth:0}]},options:{cutout:'58%',responsive:true,maintainAspectRatio:false,onClick:(e,els)=>{if(!els.length)return;const label=charts[id].data.labels[els[0].index];if(id==='chartStatus'){const val=(label===EMPTY_LABEL?EMPTY_VALUE:label);fStatus.value=(fStatus.value===val?'':val);setActiveKpis();applyFilters();setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120)}},plugins:{legend:{position:'bottom',labels:{boxWidth:12}}}}})}
-function bar(id,obj,horizontal=false){destroy(id);const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,10);charts[id]=new Chart(document.getElementById(id),{type:'bar',data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),backgroundColor:'rgba(8,208,187,.65)',borderColor:'#08d0bb',borderWidth:1}]},options:{indexAxis:horizontal?'y':'x',responsive:true,maintainAspectRatio:false,onClick:(ev,els)=>{if(!els.length)return;const label=charts[id].data.labels[els[0].index];const val=(label===EMPTY_LABEL?EMPTY_VALUE:label);if(id==='chartPrioridade')fPrioridade.value=(fPrioridade.value===val?'':val);if(id==='chartModulo')fModulo.value=(fModulo.value===val?'':val);if(id==='chartTipoAtuacao')fTipoAtuacao.value=(fTipoAtuacao.value===val?'':val);setActiveKpis();applyFilters();setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120)},plugins:{legend:{display:false}},scales:{y:{beginAtZero:true},x:{beginAtZero:true,ticks:{autoSkip:false,maxRotation:45}}}}})}
-function line(id,obj){destroy(id);const e=Object.entries(obj).sort((a,b)=>a[0].localeCompare(b[0],'pt-BR',{numeric:true}));charts[id]=new Chart(document.getElementById(id),{type:'line',data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),borderColor:'#08d0bb',backgroundColor:'rgba(8,208,187,.12)',tension:.35,fill:false,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,onClick:(ev,els)=>{if(!els.length)return;const label=charts[id].data.labels[els[0].index];const val=(label===EMPTY_LABEL?EMPTY_VALUE:label);if(id==='chartSprint')fSprint.value=(fSprint.value===val?'':val);setActiveKpis();applyFilters();setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120)},plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}})}
-function renderCharts(){donut('chartStatus',countBy(filteredData,'STATUS'));bar('chartPrioridade',countBy(filteredData,'PRIORIDADE'));bar('chartTipoAtuacao',countBy(filteredData,'TIPO_ATUACAO'),true);bar('chartModulo',countBy(filteredData,'MODULO'),true);line('chartSprint',countBy(filteredData,'SPRINT'));donut('chartCriticos',countBy(filteredData.filter(isCritico),'STATUS'))}
+function totalObj(obj){return Object.values(obj).reduce((a,b)=>a+b,0)}
+function pctLabel(v,total){return total?(v/total*100).toFixed(1)+'%':'0.0%'}
+function donut(id,obj){destroy(id);const total=totalObj(obj);charts[id]=new Chart(document.getElementById(id),{type:'doughnut',data:{labels:Object.keys(obj),datasets:[{data:Object.values(obj),backgroundColor:palette,borderWidth:0}]},options:{cutout:'58%',responsive:true,maintainAspectRatio:false,onClick:(e,els)=>{if(!els.length)return;const label=charts[id].data.labels[els[0].index];if(id==='chartStatus'){const val=(label===EMPTY_LABEL?EMPTY_VALUE:label);toggleMultiValue('fStatus',val);setActiveKpis();applyFilters();setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120)}},plugins:{tooltip:{callbacks:{label:(ctx)=>`${ctx.label}: ${ctx.parsed} (${pctLabel(ctx.parsed,total)})`}},legend:{position:'bottom',labels:{boxWidth:12,generateLabels(chart){const data=chart.data;return data.labels.map((label,i)=>{const v=data.datasets[0].data[i]||0;return{text:`${label} — ${v} (${pctLabel(v,total)})`,fillStyle:data.datasets[0].backgroundColor[i%data.datasets[0].backgroundColor.length],strokeStyle:data.datasets[0].backgroundColor[i%data.datasets[0].backgroundColor.length],lineWidth:0,index:i}})}}}}})}
+function bar(id,obj,horizontal=false){destroy(id);const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,10);const total=totalObj(obj);charts[id]=new Chart(document.getElementById(id),{type:'bar',data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),backgroundColor:'rgba(8,208,187,.65)',borderColor:'#08d0bb',borderWidth:1}]},options:{indexAxis:horizontal?'y':'x',responsive:true,maintainAspectRatio:false,onClick:(ev,els)=>{if(!els.length)return;const label=charts[id].data.labels[els[0].index];const val=(label===EMPTY_LABEL?EMPTY_VALUE:label);if(id==='chartPrioridade')toggleMultiValue('fPrioridade',val);if(id==='chartModulo')toggleMultiValue('fModulo',val);if(id==='chartTipoAtuacao')toggleMultiValue('fTipoAtuacao',val);if(id==='chartResponsavel')toggleMultiValue('fResponsavel',val);setActiveKpis();applyFilters();setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120)},plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>`${ctx.parsed[horizontal?'x':'y']} itens (${pctLabel(ctx.parsed[horizontal?'x':'y'],total)})`}}},scales:{y:{beginAtZero:true,ticks:{callback:function(value,index){const label=this.getLabelForValue?this.getLabelForValue(value):e[index]?.[0];const found=e.find(x=>x[0]===label);return found?`${label} (${pctLabel(found[1],total)})`:label}}},x:{beginAtZero:true,ticks:{autoSkip:false,maxRotation:45,callback:function(value,index){const label=this.getLabelForValue?this.getLabelForValue(value):e[index]?.[0];const found=e.find(x=>x[0]===label);return horizontal?value:(found?`${label} (${pctLabel(found[1],total)})`:label)}}}}}})}
+function line(id,obj){destroy(id);const e=Object.entries(obj).sort((a,b)=>a[0].localeCompare(b[0],'pt-BR',{numeric:true}));const total=totalObj(obj);charts[id]=new Chart(document.getElementById(id),{type:'line',data:{labels:e.map(x=>x[0]),datasets:[{data:e.map(x=>x[1]),borderColor:'#08d0bb',backgroundColor:'rgba(8,208,187,.12)',tension:.35,fill:false,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,onClick:(ev,els)=>{if(!els.length)return;const label=charts[id].data.labels[els[0].index];const val=(label===EMPTY_LABEL?EMPTY_VALUE:label);if(id==='chartSprint')toggleMultiValue('fSprint',val);setActiveKpis();applyFilters();setTimeout(()=>document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'}),120)},plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>`${ctx.parsed.y} itens (${pctLabel(ctx.parsed.y,total)})`}}},scales:{y:{beginAtZero:true},x:{ticks:{callback:function(value,index){const label=this.getLabelForValue(value);const found=e.find(x=>x[0]===label);return found?`${label} (${pctLabel(found[1],total)})`:label}}}}}})}
+function renderCharts(){donut('chartStatus',countBy(filteredData,'STATUS'));bar('chartPrioridade',countBy(filteredData,'PRIORIDADE'));bar('chartTipoAtuacao',countBy(filteredData,'TIPO_ATUACAO'),true);bar('chartModulo',countBy(filteredData,'MODULO'),true);bar('chartResponsavel',countBy(filteredData,'RESPONSAVEL'),true);line('chartSprint',countBy(filteredData,'SPRINT'));donut('chartCriticos',countBy(filteredData.filter(isCritico),'STATUS'))}
 function pct(v,total){return total?(v/total*100).toFixed(1)+'%':'0%'}
-function renderTables(){const mods=Object.entries(countBy(filteredData,'MODULO')).sort((a,b)=>b[1]-a[1]).slice(0,12),total=filteredData.length,max=mods[0]?.[1]||1;tblModulos.innerHTML='<thead><tr><th>Módulo / Rotina</th><th></th><th>Itens</th><th>%</th></tr></thead><tbody>'+mods.map(([k,v])=>`<tr style="cursor:pointer" onclick="fModulo.value=(fModulo.value==='${k===EMPTY_LABEL?EMPTY_VALUE:escAttr(k)}'?'':'${k===EMPTY_LABEL?EMPTY_VALUE:escAttr(k)}');setActiveKpis();applyFilters();document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'})"><td>${esc(k)}</td><td><div class="barline"><span style="width:${Math.max(4,v/max*100)}%"></span></div></td><td>${v}</td><td>${pct(v,total)}</td></tr>`).join('')+'</tbody>';const crit=filteredData.filter(x=>!isConcluido(x)&&(isCritico(x)||isAndamento(x)||hasDepend(x))).slice(0,80);renderTable('tblCriticos',crit,['ID','STATUS','PRIORIDADE','MODULO','DESCRICAO','RESPONSAVEL'],['ID','Status','Prioridade','Módulo','Descrição','Responsável']);renderTable('tblDetalhe',filteredData.slice(0,700),['ID','STATUS','PRIORIDADE','TIPO_ATUACAO','MODULO','SPRINT','RESPONSAVEL','DESCRICAO','DEPENDENCIA','DATA'],['ID','Status','Prioridade','Tipo de Atuação','Módulo','Sprint','Responsável','Descrição','Dependência','Data'])}
+function renderTables(){const mods=Object.entries(countBy(filteredData,'MODULO')).sort((a,b)=>b[1]-a[1]).slice(0,12),total=filteredData.length,max=mods[0]?.[1]||1;tblModulos.innerHTML='<thead><tr><th>Módulo / Rotina</th><th></th><th>Itens</th><th>%</th></tr></thead><tbody>'+mods.map(([k,v])=>`<tr style="cursor:pointer" onclick="toggleMultiValue('fModulo','${k===EMPTY_LABEL?EMPTY_VALUE:escAttr(k)}');setActiveKpis();applyFilters();document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'})"><td>${esc(k)}</td><td><div class="barline"><span style="width:${Math.max(4,v/max*100)}%"></span></div></td><td>${v}</td><td>${pct(v,total)}</td></tr>`).join('')+'</tbody>';const resps=Object.entries(countBy(filteredData,'RESPONSAVEL')).sort((a,b)=>b[1]-a[1]).slice(0,12),rmax=resps[0]?.[1]||1;tblResponsaveis.innerHTML='<thead><tr><th>Responsável</th><th></th><th>Itens</th><th>%</th></tr></thead><tbody>'+resps.map(([k,v])=>`<tr style="cursor:pointer" onclick="toggleMultiValue('fResponsavel','${k===EMPTY_LABEL?EMPTY_VALUE:escAttr(k)}');setActiveKpis();applyFilters();document.getElementById('tblDetalhe').scrollIntoView({behavior:'smooth',block:'start'})"><td>${esc(k)}</td><td><div class="barline"><span style="width:${Math.max(4,v/rmax*100)}%"></span></div></td><td>${v}</td><td>${pct(v,total)}</td></tr>`).join('')+'</tbody>';const crit=filteredData.filter(x=>!isConcluido(x)&&(isCritico(x)||isAndamento(x)||hasDepend(x))).slice(0,80);renderTable('tblCriticos',crit,['ID','STATUS','PRIORIDADE','MODULO','DESCRICAO','RESPONSAVEL'],['ID','Status','Prioridade','Módulo','Descrição','Responsável']);renderTable('tblDetalhe',filteredData.slice(0,700),['ID','STATUS','PRIORIDADE','TIPO_ATUACAO','MODULO','SPRINT','RESPONSAVEL','DESCRICAO','DEPENDENCIA','DATA'],['ID','Status','Prioridade','Tipo de Atuação','Módulo','Sprint','Responsável','Descrição','Dependência','Data'])}
 function pill(v){const s=low(v);let cls='pill';if(s.includes('conclu'))cls+=' okp';else if(s.includes('crítica')||s.includes('critica'))cls+=' riskp';else if(s.includes('andamento')||s.includes('alta')||s.includes('média')||s.includes('media'))cls+=' warnp';else cls+=' infop';return `<span class="${cls}">${esc(v||'--')}</span>`}
 function renderTable(id,data,fields,headers){document.getElementById(id).innerHTML=`<thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${data.map(r=>`<tr>${fields.map(f=>`<td>${['STATUS','PRIORIDADE','TIPO_ATUACAO'].includes(f)?pill(r[f]):esc(r[f]||'--')}</td>`).join('')}</tr>`).join('')}</tbody>`}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
