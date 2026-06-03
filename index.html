@@ -84,7 +84,7 @@ label{display:block;font-size:11px;color:#dce4ec;font-weight:700;text-transform:
 </section>
 </main><div class="footer">Dashboard atualizado automaticamente via Power Automate | Fonte: SharePoint Lists SENIOR | Ambiente: MARISTA BRASIL</div>
 <script>
-const DATA_URL='./backlog_marista.json';let rawData=[],filteredData=[],charts={},kpiFilters={pendentes:false,criticos:false};
+const DATA_URL = 'https://bhm05.github.io/dashboard-marista-backlog/backlog_marista.json';let rawData=[],filteredData=[],charts={},kpiFilters={pendentes:false,criticos:false};
 Chart.defaults.color='#d7dee8';Chart.defaults.borderColor='rgba(255,255,255,.10)';
 const palette=['#1e9bff','#ff3f73','#ff7a1a','#f4c20d','#08d0bb','#b65cff','#18c866','#8aa0b2'];
 const EMPTY_VALUE='__EMPTY__';const EMPTY_LABEL='Não informado';const norm=v=>(v===null||v===undefined?'':String(v).trim());const low=v=>norm(v).toLowerCase();const isEmptyFilter=v=>v===EMPTY_VALUE;const displayFilterLabel=v=>v===EMPTY_VALUE?EMPTY_LABEL:v;
